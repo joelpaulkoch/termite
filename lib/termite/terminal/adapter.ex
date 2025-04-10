@@ -18,4 +18,9 @@ defmodule Termite.Terminal.Adapter do
   synchronously in the adapter.
   """
   @callback write(terminal :: term, string :: String.t()) :: {:ok, term} | {:error, atom}
+
+  @doc """
+  Returns a map of the width and height
+  """
+  @callback resize(terminal :: term) :: %{width: integer(), height: integer()}
 end

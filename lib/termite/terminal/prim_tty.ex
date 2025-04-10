@@ -24,6 +24,13 @@ defmodule Termite.Terminal.PrimTTY do
     from_record(term)[:writer]
   end
 
+  @impl true
+  def resize(_term) do
+    {:ok, cols} = :io.columns()
+    {:ok, rows} = :io.rows()
+    %{width: cols, height: rows}
+  end
+
   @doc false
   @impl true
   def start(opts \\ []) do

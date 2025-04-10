@@ -35,9 +35,8 @@ defmodule Termite.Terminal do
   Update the size of the terminal.
   """
   def resize(state) do
-    {:ok, cols} = :io.columns()
-    {:ok, rows} = :io.rows()
-    %{state | size: %{width: cols, height: rows}}
+    %{adapter: {adapter, term}} = state
+    %{state | size: adapter.resize(term)}
   end
 
   @doc """
