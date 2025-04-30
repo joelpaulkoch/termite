@@ -26,7 +26,6 @@ defmodule Demo do
 
   defp cleanup(state) do
     state
-    |> Screen.run_escape_sequence(:reset)
     |> Screen.run_escape_sequence(:screen_alt_exit)
     |> Screen.run_escape_sequence(:screen_clear)
   end

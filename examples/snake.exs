@@ -2,9 +2,9 @@ defmodule Snake do
   require Logger
   alias Termite.Screen
 
-  def start() do
+  def start(terminal) do
     term =
-      Termite.Terminal.start()
+      terminal
       |> Screen.run_escape_sequence(:screen_alt)
       |> Screen.run_escape_sequence(:cursor_hide)
 
@@ -57,7 +57,6 @@ defmodule Snake do
 
   defp cleanup(state) do
     state
-    |> Screen.run_escape_sequence(:reset)
     |> Screen.run_escape_sequence(:cursor_show)
     |> Screen.run_escape_sequence(:screen_alt_exit)
     |> Screen.run_escape_sequence(:screen_clear)
@@ -155,4 +154,5 @@ defmodule Snake do
   end
 end
 
-Snake.start()
+terminal = Termite.Terminal.start()
+Snake.start(terminal)
