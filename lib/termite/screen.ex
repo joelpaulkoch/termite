@@ -17,6 +17,8 @@ defmodule Termite.Screen do
   defp seq(:screen_alt, []), do: "?1049h"
   defp seq(:screen_alt_exit, []), do: "?1049l"
 
+  defp seq(:delete_chars, [n]), do: "#{n}P"
+
   defp seq(:cursor_show, []), do: "?25h"
   defp seq(:cursor_hide, []), do: "?25l"
 
@@ -119,6 +121,13 @@ defmodule Termite.Screen do
   """
   def clear_screen(term) do
     run_escape_sequence(term, :screen_clear, [])
+  end
+
+  @doc """
+  Delete the specified number of characters from the cursor.
+  """
+  def delete_chars(term, n \\ 1) do
+    run_escape_sequence(term, :delete_chars, [n])
   end
 
   @doc """

@@ -1,4 +1,4 @@
-# Termite
+# 🪳 Termite
 
 A dependency-free NIF-free terminal library for Elixir.
 
