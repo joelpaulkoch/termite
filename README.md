@@ -22,7 +22,7 @@ He package can be installed by adding `termite` to your list of dependencies in 
 ```elixir
 def deps do
   [
-    {:termite, "~> 0.2.0"}
+    {:termite, "~> 0.3.0"}
   ]
 end
 ```
@@ -34,7 +34,7 @@ using `mix run` as it can change the way the terminal works which isn't entirely
 iex.
 
 ```elixir
-Mix.install([{:termite, "~> 0.2.0"}]
+Mix.install([{:termite, "~> 0.3.0"}]
 
 styled =
   Termite.Style.bold()
@@ -43,15 +43,19 @@ styled =
   |> Termite.Style.render_to_string("I am bold\n")
 
 Termite.Terminal.start()
-|> Termite.Screen.run_escape_sequence(:reset)
-|> Termite.Screen.run_escape_sequence(:screen_clear)
-|> Termite.Screen.write("\n\n\n")
-|> Termite.Screen.run_escape_sequence(:cursor_previous_line, [3])
-|> Termite.Screen.write("Hello world")
-|> Termite.Screen.run_escape_sequence(:cursor_next_line, [3])
-|> Termite.Screen.write(styled)
+  |> Termite.Screen.clear_screen()
+  |> Termite.Screen.cursor_position(0, 0)
+  |> Termite.Screen.write(styled)
+  |> tap(fn _ -> :timer.sleep(1000) end)
+  |> Termite.Screen.alt_screen()
+  |> Termite.Screen.cursor_position(10, 3)
+  |> Termite.Screen.write("I'm on an alt screen")
+  |> tap(fn _ -> :timer.sleep(1000) end)
+  |> Termite.Screen.exit_alt_screen()
 
 ```
+
+   terminal
 
 More examples are available in the examples directory.
 
