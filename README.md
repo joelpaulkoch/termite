@@ -34,7 +34,7 @@ using `mix run` as it can change the way the terminal works which isn't entirely
 iex.
 
 ```elixir
-Mix.install([{:termite, "~> 0.3.0"}]
+Mix.install([{:termite, "~> 0.3.0"}])
 
 styled =
   Termite.Style.bold()
