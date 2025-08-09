@@ -148,20 +148,28 @@ defmodule Termite.Style do
   "\e[1mHello\e[0m"
   ```
   """
-  def render_to_string(style \\ %Style{}, str)
+  def render_to_string(style \\ %Style{}, str, opts \\ [])
 
-  def render_to_string(%Style{styles: []}, str) do
+  def render_to_string(%Style{styles: []}, str, _opts) do
     str
   end
 
-  def render_to_string(style = %Style{}, str) do
-    seq =
-      style.styles
-      |> Enum.sort()
-      |> Enum.map(&seq(&1, style))
-      |> Enum.join(";")
+  def render_to_string(style = %Style{}, str, opts) do
+    styling = Keyword.get(opts, :styling, :regular)
 
-    Termite.Screen.escape_code() <>
-      seq <> "m" <> str <> reset_code()
+    case styling do
+      :none ->
+        str
+
+      :regular ->
+        seq =
+          style.styles
+          |> Enum.sort()
+          |> Enum.map(&seq(&1, style))
+          |> Enum.join(";")
+
+        Termite.Screen.escape_code() <>
+          seq <> "m" <> str <> reset_code()
+    end
   end
 end
